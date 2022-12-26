@@ -24,7 +24,7 @@
  * Remove lines 60-75 if your Node class doesn't use a parent pointer
  * Prints the tree after every insertion and deletion.
  * Assert func is used to check the Height, Balance Factor, Pointers and the tree being Binary Search Tree.
- * You can comment lines 167-178,174-175 to specify the problem if happens in your code.
+ * You can comment lines 167-168,174-175 to specify the problem if happens in your code.
  * I would suggest first beginning with a simple tree and then moving on to a more complex one.
  * To stress test your code, create 100 vector with the size of 1000(can do without printing for faster results)
  * G O O D   L U C K !
