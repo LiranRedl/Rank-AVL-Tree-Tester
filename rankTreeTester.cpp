@@ -26,10 +26,10 @@
  * @param root - the root of the tree
  * @return true if the tree is valid, false otherwise
  * Should use to make sure your tree is valid after every insertion and deletion
- * If your Node class doesn't use a parent pointer, remove lines 54-68
+ * If your Node class doesn't use a parent pointer, remove lines 56-70
  * If your tree isn't a Rank Tree, remove lines 50-52
  */
-*/
+
 template<class Key, class Value>
 bool is_tree_valid(RankNode<Key, Value> *root) {
     if (!root) {
