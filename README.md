@@ -1,6 +1,13 @@
 # Rank-AVL-Tree-Tester
+to run on linux server:
+ 1.move requreed files for rank tree to this repositoy
+ 2.change filefunctions names to fit this tester (RankTree.h)
+ 3. run command in linux: chmod +x run_test.sh
+ 4. run command in linux: ./run_test.sh
  * A Rank/AVL Tree Tester to test your tree implementation
  *
+ to run on windows with clion:
+ 
  * Replace all the red errors with your own Tree code.
  * You may add any additional functions you need.
  * Remove Lines 50-52 if u are testing only an AVL Tree
