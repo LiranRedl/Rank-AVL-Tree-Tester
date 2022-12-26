@@ -1,18 +1,16 @@
 /*
  * A Rank/AVL Tree Tester to test your tree implementation
  *
- * Replace all the red errors with your own Tree code.
+ * Please Read the instructions in the README file before you start
+
  * You may add any additional functions you need.
- * Prints the tree after every insertion and deletion.
- * Assert func is used to check the Height, Balance Factor, Pointers and the tree being Binary Search Tree.
- * You can comment lines 169-170,175-176 to specify the problem if happens in your code.
+ *
  * I would suggest first beginning with a simple tree and then moving on to a more complex one.
- * To stress test your code, create 100 vector with the size of 1000.
+ *
  * G O O D  L U C K !
  */
 
 #include <iostream>
-#include "RankTree.h"
 #include <vector>
 #include <ostream>
 #include <random>
@@ -20,14 +18,16 @@
 #include <algorithm>
 #include <memory>
 #include <assert.h>
+#include "RankTree.h"
 
 /*
  * is_tree_valid - checks if the tree is valid, meaning that the tree is balanced and the rank is correct
  * @param root - the root of the tree
  * @return true if the tree is valid, false otherwise
  * Should use to make sure your tree is valid after every insertion and deletion
- * If your Node class doesn't use a parent pointer, remove lines 56-70
- * If your tree isn't a Rank Tree, remove lines 50-52
+ * If your Node class doesn't use a parent pointer, remove lines 60-75
+ * If your tree isn't a Rank Tree, remove lines 52-54
+ * if assert happens, put breaking points in "return false" to see where the error is
  */
 
 template<class Key, class Value>
@@ -35,24 +35,29 @@ bool is_tree_valid(RankNode<Key, Value> *root) {
     if (!root) {
         return true;
     }
+    // Checks the height of every node is valid
     if (root->height != 1 + std::max(getHeight(root->left_son), getHeight(root->right_son))) {
         return false;
     }
     if (!root->left_son && !root->right_son && root->height != 0) {
         return false;
     }
+    //checks the Tree is a Binary Search Tree
     if (root->left_son && root->left_son->key >= root->key) {
         return false;
     }
     if (root->right_son && root->right_son->key <= root->key) {
         return false;
     }
+    //checks that the rank of every node is valid
     if (root->weight != 1 + getWeight(root->left_son) + getWeight(root->right_son)) {
         return false;
     }
+    //checks that the Balance Factor of every node is valid
     if (std::abs(BalanceFactor(root)) > 1) {
         return false;
     }
+    //checks that the parent pointer is valid
     if (root->parent) {
         if (root->parent->left_son != root && root->parent->right_son != root) {
             return false;
@@ -105,19 +110,8 @@ int getWeight(RankNode<Key, Value> *root) {
 }
 
 
-
-void printTree(RankNode<int,int> * root) {
-    std::cout.flush();
-    if(root== nullptr)
-        return;
-
-    printTree(root->left_son);
-    std::cout<<root->key;
-    // BalanceFactor func calculates the BF of a given node, implementation in RankTree.h
-    std::cout<<" BF: "<<BalanceFactor(root)<<" Height: "<<root->height-1<<std::endl;
-    printTree(root->right_son);
-}
-void print2DUtil(RankNode<int,int> *root, int space)
+// A function to print the tree
+void print2DHelper(RankNode<int,int> *root, int space)
 {
     // Base case
     if (root == NULL)
@@ -127,48 +121,53 @@ void print2DUtil(RankNode<int,int> *root, int space)
     space += 10;
 
     // Process right_son child first
-    print2DUtil(root->right_son, space);
+    print2DHelper(root->right_son, space);
 
     // Print current node after space
-    // count
     std::cout<<std::endl;
     for (int i = 10; i < space; i++)
         std::cout<<" ";
     std::cout<<root->value<<"\n";
 
     // Process left_son child
-    print2DUtil(root->left_son, space);
+    print2DHelper(root->left_son, space);
 }
 
-// Wrapper over print2DUtil()
+// Wrapper over print2DHelper()
 void print2D(RankNode<int,int> *root)
 {
     // Pass initial space count as 0
-    print2DUtil(root, 0);
+    print2DHelper(root, 0);
     std::cout<<std::endl;
     std::cout<<std::endl;
     std::cout<<std::endl;
     std::cout<<std::endl;
     std::cout<<std::endl;
     std::cout<<std::endl;
-    std::cout<<std::endl;
-
 }
-int main1(){
+int main(){
     RankTree<int,int> tree;
     std::vector<int> vector;
-    //determines the size of the tree
-    for (int i=1; i < 11; i++) vector.push_back(i);
+    int size = 0;
+    int count = 0;
+    //determines the size of the tree - change i to test different sizes
+    for (int i = 1; i < 12; i++) {
+        vector.push_back(i);
+        size = i;
+    }
 
-    //randomizes the vector, and k is the number of trees to randomize
-    for (int k = 1; k < 11; ++k) {
+    //randomizes the vector, and k is the number of trees to randomize - change k to test different numbers of trees
+    for (int k = 1; k < 2; ++k) {
+        count = k;
         unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
         shuffle (vector.begin(), vector.end(), std::default_random_engine(seed));
+        std::cout<<"\n     Creating The Tree \n"<<std::endl;
         for (std::vector<int>::iterator it = vector.begin() ; it != vector.end(); it++){
             tree.insert(*it,*it);
             assert(is_tree_valid(tree.root));
             print2D(tree.root);
         }
+        std::cout<<"    Deleting The Tree \n"<<std::endl;
         shuffle (vector.begin(), vector.end(), std::default_random_engine(seed));
         for (std::vector<int>::iterator it = vector.begin() ; it != vector.end(); ++it){
             tree.remove(*it);
@@ -176,11 +175,29 @@ int main1(){
             print2D(tree.root);
 
         }
-        //std::cout<<std::endl;
+        if(k != 1){
+            std::cout<<"A New Tree begins \n"<<std::endl;
+        }
         tree.deleteTree(tree.root);
         tree.root= nullptr;
-        //std::cout<<std::endl;
-        //std::cout << '\n';
+    }
+    std::cout<<" S U C C E S S"<<std::endl;
+    std::cout << '\n';
+    if(size < 100 && count < 6){
+        std::cout << "Great! Now try a Larger Tree and more Trees " << std::endl;
+        std::cout << '\n';
+    }
+    else if(size < 100){
+        std::cout << "Great! Now try a Larger Tree " << std::endl;
+        std::cout << '\n';
+    }
+    else if(count < 6){
+        std::cout << "Great! Now try more Trees " << std::endl;
+        std::cout << '\n';
+    }
+    else{
+        std::cout << "    Great! " << std::endl;
+        std::cout << '\n';
     }
 
     return 0;
