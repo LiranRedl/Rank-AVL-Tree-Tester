@@ -20,6 +20,7 @@
  *
  * Additional Important Notes:
  * You may add any additional functions you need.
+ * You should also check the printed tree to see its values are valid
  * Remove Lines 56-60 if u are testing only an AVL Tree
  * Remove lines 66-84 if your Node class doesn't use a parent pointer
  * Prints the tree after every insertion and deletion.
