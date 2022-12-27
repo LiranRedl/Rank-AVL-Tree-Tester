@@ -1,6 +1,6 @@
 # Rank-AVL-Tree-Tester
  * A Rank\AVL Tree Tester that checks and prints your tree to test your Implementation!
- *
+ * Credits to galwert 
  * Please Read the README File to run this test
  *
  * This file has a main in it, so make sure it is the only one
@@ -20,8 +20,8 @@
  *
  * Additional Important Notes:
  * You may add any additional functions you need.
- * Remove Lines 52-54 if u are testing only an AVL Tree
- * Remove lines 60-75 if your Node class doesn't use a parent pointer
+ * Remove Lines 56-60 if u are testing only an AVL Tree
+ * Remove lines 66-84 if your Node class doesn't use a parent pointer
  * Prints the tree after every insertion and deletion.
  * Assert func is used to check the Height, Balance Factor, Pointers and the tree being Binary Search Tree.
  * You can comment lines 167-168,174-175 to specify the problem if happens in your code.
