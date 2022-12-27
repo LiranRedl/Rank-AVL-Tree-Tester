@@ -25,8 +25,8 @@
  * @param root - the root of the tree
  * @return true if the tree is valid, false otherwise
  * Should use to make sure your tree is valid after every insertion and deletion
- * If your Node class doesn't use a parent pointer, remove lines 60-75
- * If your tree isn't a Rank Tree, remove lines 52-54
+ * If your Node class doesn't use a parent pointer, remove lines 66-84
+ * If your tree isn't a Rank Tree, remove lines 56-60
  * if assert happens, put breaking points in "return false" to see where the error is
  */
 
@@ -37,39 +37,48 @@ bool is_tree_valid(RankNode<Key, Value> *root) {
     }
     // Checks the height of every node is valid
     if (root->height != 1 + std::max(getHeight(root->left_son), getHeight(root->right_son))) {
+        std::cout << "Height is not valid" << std::endl;
         return false;
     }
     if (!root->left_son && !root->right_son && root->height != 0) {
+        std::cout << "Leaf Height is not valid" << std::endl;
         return false;
     }
     //checks the Tree is a Binary Search Tree
     if (root->left_son && root->left_son->key >= root->key) {
+        std::cout << "Left son is not smaller than root" << std::endl;
         return false;
     }
     if (root->right_son && root->right_son->key <= root->key) {
+        std::cout << "Right son is not bigger than root" << std::endl;
         return false;
     }
     //checks that the rank of every node is valid
     if (root->weight != 1 + getWeight(root->left_son) + getWeight(root->right_son)) {
+        std::cout << "Rank is not valid" << std::endl;
         return false;
     }
     //checks that the Balance Factor of every node is valid
     if (std::abs(BalanceFactor(root)) > 1) {
+        std::cout << "Balance Factor is not valid" << std::endl;
         return false;
     }
     //checks that the parent pointer is valid
     if (root->parent) {
         if (root->parent->left_son != root && root->parent->right_son != root) {
+            std::cout << "Parent pointer is not valid" << std::endl;
             return false;
         }
     }
     if (root->left_son) {
         if (root->left_son->parent != root) {
+            std::cout << "Parent's Left Son pointer is not valid" << std::endl;
             return false;
         }
     }
     if (root->right_son) {
         if (root->right_son->parent != root) {
+            std::cout << "Parent's Right Son pointer is not valid" << std::endl;
             return false;
         }
     }
@@ -151,13 +160,13 @@ int main(){
     int size = 0;
     int count = 0;
     //determines the size of the tree - change i to test different sizes
-    for (int i = 1; i < 12; i++) {
+    for (int i = 1; i < 200; i++) {
         vector.push_back(i);
         size = i;
     }
 
     //randomizes the vector, and k is the number of trees to randomize - change k to test different numbers of trees
-    for (int k = 1; k < 2; ++k) {
+    for (int k = 1; k < 3; ++k) {
         count = k;
         unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
         shuffle (vector.begin(), vector.end(), std::default_random_engine(seed));
@@ -165,6 +174,7 @@ int main(){
         for (std::vector<int>::iterator it = vector.begin() ; it != vector.end(); it++){
             tree.insert(*it,*it);
             assert(is_tree_valid(tree.root));
+            if(is_tree_valid(tree.root)){}
             print2D(tree.root);
         }
         std::cout<<"    Deleting The Tree \n"<<std::endl;
